@@ -17,7 +17,10 @@ zip archive for easy retrieval.  All downloaded files are stored on the host
 in the persistent `/DATA/AppData/FapelloDownloader/data` directory so they are
 retained between container restarts.
 
-![alt text](https://lh3.googleusercontent.com/sitesv/AAzXCkfpY_GndtUG9NjWE6Voug6bOCsP7t6vXodo-Bb9TiseW4Cvkxf8LOPA39YBUOO6UNyb2YbeeuprSHLmj1UAMADSjfG6zMV7iYx1J7diuvtQ0o6rtbGZ_69roE1iS_1wWUtVpTiHVazitSpfRmQ5AG4HyNXIxv_YgHGp39D5TYWmOY3oRwprLBIQSM8JeF7MyUQXN0xE9a0qFVy57wjuDDttOevW9fMpbgZnvqs=w1280)
+<img width="806" height="852" alt="image" src="https://github.com/user-attachments/assets/f88ec847-73a7-485b-8147-83cd555b644f" />
+
+<img width="903" height="857" alt="image" src="https://github.com/user-attachments/assets/b772ab9c-3770-441a-b59d-11d459af1ef5" />
+
 
 ## Features
 
