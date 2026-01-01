@@ -1,4 +1,4 @@
-# Fapello Downloader for ZimaOS
+# Fapello Downloader for ZimaOS / Docker
 
 ## Overview
 
