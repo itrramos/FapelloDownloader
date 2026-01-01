@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fapello Downloader</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #4b0082 0%, #ff8c00 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            color: #fff;
+        }
+        .nav {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: center;
+            padding: 15px 0;
+        }
+        .nav a {
+            color: #fff;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.2s ease;
+        }
+        .nav a:hover {
+            color: #ffe0b3;
+        }
+        .container {
+            background: #ffffff;
+            color: #333;
+            border-radius: 12px;
+            padding: 30px 40px;
+            margin-top: 60px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        h1 {
+            margin-top: 0;
+            text-align: center;
+            color: #4b0082;
+        }
+        label {
+            display: block;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        .actions {
+            margin-top: 30px;
+            text-align: center;
+        }
+        button {
+            background: #ff8c00;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+        button:hover {
+            background: #e67e00;
+        }
+        .message {
+            margin-top: 20px;
+            color: #cc0000;
+            text-align: center;
+        }
+        .footer {
+            margin-top: auto;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="{{ url_for('index') }}">Download</a>
+        <a href="{{ url_for('history_page') }}">History</a>
+    </nav>
+    <div class="container">
+        <h1>Fapello Downloader</h1>
+        <form action="{{ url_for('download_route') }}" method="post">
+            <label for="url">Fapello URL</label>
+            <input type="text" id="url" name="url" placeholder="https://fapello.com/username/" required>
+
+            <label for="workers">Simultaneous downloads (1–60)</label>
+            <input type="number" id="workers" name="workers" min="1" max="60" value="15">
+
+            <div class="actions">
+                <button type="submit">Download</button>
+            </div>
+        </form>
+        {% if message %}
+        <div class="message">{{ message }}</div>
+        {% endif %}
+    </div>
+    <div class="footer">Media will be saved to the persistent data directory on your server.</div>
+</body>
+</html>

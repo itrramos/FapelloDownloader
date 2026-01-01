@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download History</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #4b0082 0%, #ff8c00 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            color: #fff;
+        }
+        .nav {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: center;
+            padding: 15px 0;
+        }
+        .nav a {
+            color: #fff;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.2s ease;
+        }
+        .nav a:hover {
+            color: #ffe0b3;
+        }
+        .container {
+            background: #ffffff;
+            color: #333;
+            border-radius: 12px;
+            padding: 30px 40px;
+            margin-top: 60px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        h2 {
+            margin-top: 0;
+            color: #4b0082;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background: #f3f3f3;
+        }
+        tr:hover {
+            background: #f9f9f9;
+        }
+        .actions {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        button {
+            background: #ff8c00;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+        button:hover {
+            background: #e67e00;
+        }
+        .empty {
+            text-align: center;
+            margin-top: 30px;
+            font-weight: bold;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="{{ url_for('index') }}">Download</a>
+        <a href="{{ url_for('history_page') }}">History</a>
+    </nav>
+    <div class="container">
+        <h2>Download History</h2>
+        {% if history %}
+        <form action="{{ url_for('history_page') }}" method="post">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width:40px;"><input type="checkbox" id="select-all" onclick="toggleSelectAll(this)"></th>
+                        <th>Model</th>
+                        <th>ZIP File</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entry in history %}
+                    <tr>
+                        <td><input type="checkbox" name="selected" value="{{ entry.model }}"></td>
+                        <td>{{ entry.model }}</td>
+                        <td><a href="{{ url_for('download_file', model=entry.model) }}">{{ entry.zip }}</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="actions">
+                <button type="submit" name="action" value="delete_selected">Delete selected</button>
+                <button type="submit" name="action" value="delete_all" onclick="return confirm('Delete all history entries?')">Delete all</button>
+            </div>
+        </form>
+        {% else %}
+        <div class="empty">No downloads yet.</div>
+        {% endif %}
+    </div>
+    <script>
+        function toggleSelectAll(checkbox) {
+            const checkboxes = document.querySelectorAll('input[name="selected"]');
+            checkboxes.forEach(cb => { cb.checked = checkbox.checked; });
+        }
+    </script>
+</body>
+</html>

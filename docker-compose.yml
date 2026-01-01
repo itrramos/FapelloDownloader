@@ -1,0 +1,92 @@
+name: fapellodownloader
+services:
+  fapellodownloader:
+    container_name: fapellodownloader
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: fapellodownloader:latest
+    restart: unless-stopped
+    ports:
+      - target: 8080
+        published: "8089"
+        protocol: tcp
+    volumes:
+      # Persist downloaded media on the host so they survive container restarts.
+      - type: bind
+        source: /DATA/AppData/FapelloDownloader/data
+        target: /downloads
+    environment:
+      # You can override the internal listening port if needed.
+      - PORT=8080
+    labels:
+      # Use the original project's logo hosted on GitHub as the app icon.
+      icon: https://raw.githubusercontent.com/Djdefrag/Fapello.Downloader/main/Assets/logo.png
+    networks:
+      - fapellodownloader
+
+networks:
+  fapellodownloader:
+    name: fapellodownloader
+    driver: bridge
+
+x-casaos:
+  # Supported CPU architectures.  ZimaOS currently supports x86_64 (amd64) and ARM.
+  architectures:
+    - amd64
+    - arm
+    - arm64
+  # Name of the main service defined above.  This tells the ZimaOS UI which
+  # container to proxy when the app is launched.
+  main: fapellodownloader
+  # Name of the developer/maintainer of this app.  The original project was
+  # created by Djdefrag; this entry notes that the containerisation work was
+  # performed for ZimaOS.
+  author: "Djdefrag (packaged for ZimaOS by community contributor)"
+  # Classification used by the ZimaOS store.  See category‑list.json for valid
+  # values.  This app downloads media from a website so the Downloader
+  # category is appropriate.
+  category: Downloader
+  # Human‑readable description.  Multi‑language support is provided via
+  # language codes.  At least an en_us entry is required.
+  description:
+    en_us: |
+      **Fapello Downloader** is a simple web application that lets you batch
+      download all images and videos from any public Fapello.com profile.  Just
+      paste a Fapello page URL and the downloader will fetch every media file
+      into a zip archive for you.  This containerised version exposes a web
+      interface on port 8089 and stores downloaded data in
+      `/DATA/AppData/FapelloDownloader/data` on the host.
+  developer: Djdefrag
+  # Relative URL to the icon used by the ZimaOS interface.  We reuse the
+  # upstream project's icon.  If you fork this repository you can replace
+  # the link with your own asset hosted on a CDN or GitHub raw URL.
+  icon: https://raw.githubusercontent.com/Djdefrag/Fapello.Downloader/main/Assets/logo.png
+  # A short tag line that appears in the app store listing.
+  tagline:
+    en_us: "Batch download images and videos from Fapello pages"
+  # Title shown in the ZimaOS UI.  Multi‑language support is provided.
+  title:
+    en_us: Fapello Downloader
+  # The top‑level path served by the web application.  This is used by
+  # ZimaOS to know where to route a browser when the app is opened.
+  index: /
+  # Port exposed to the user.  Should match the published port above.  This
+  # entry is a string because of how CasaOS/ZimaOS parses compose files.
+  port_map: "8089"
+  # HTTP or HTTPS.  Our app does not support TLS on its own so http is used.
+  scheme: http
+  # List of screenshot URLs shown in the store.  Feel free to replace these
+  # links with screenshots of your deployed app once you publish it on
+  # GitHub/CDN.  For now we reuse the icon as a placeholder.
+  screenshot_link:
+    - https://raw.githubusercontent.com/Djdefrag/Fapello.Downloader/main/Assets/logo.png
+  # A shorter identifier used by third‑party stores.  It should be unique
+  # within the ZimaOS app ecosystem.
+  store_app_id: fapellodownloader
+  # Set this to the hostname you want the container to use.  Leaving it
+  # empty means Docker will assign one automatically.
+  hostname: ""
+  # Whether the app uses privileged mode.  Our container does not need
+  # privileged access.
+  is_uncontrolled: false

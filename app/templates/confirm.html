@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Download</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #4b0082 0%, #ff8c00 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            color: #fff;
+        }
+        .nav {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: center;
+            padding: 15px 0;
+        }
+        .nav a {
+            color: #fff;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.2s ease;
+        }
+        .nav a:hover {
+            color: #ffe0b3;
+        }
+        .container {
+            background: #ffffff;
+            color: #333;
+            border-radius: 12px;
+            padding: 30px 40px;
+            margin-top: 60px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+        h2 {
+            margin-top: 0;
+            color: #4b0082;
+        }
+        .actions {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-around;
+        }
+        button {
+            background: #ff8c00;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+        button:hover {
+            background: #e67e00;
+        }
+        .cancel {
+            background: #ccc;
+            color: #333;
+        }
+        .cancel:hover {
+            background: #bbb;
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="{{ url_for('index') }}">Download</a>
+        <a href="{{ url_for('history_page') }}">History</a>
+    </nav>
+    <div class="container">
+        <h2>Model "{{ model }}" already downloaded</h2>
+        <p>You have previously downloaded this model. Do you want to download it again?</p>
+        <form action="{{ url_for('download_route') }}" method="post" style="display:inline-block;">
+            <input type="hidden" name="url" value="{{ url }}">
+            <input type="hidden" name="workers" value="{{ workers }}">
+            <input type="hidden" name="confirm" value="1">
+            <button type="submit">Download again</button>
+        </form>
+        <form action="{{ url_for('index') }}" method="get" style="display:inline-block; margin-left: 10px;">
+            <button type="submit" class="cancel">Cancel</button>
+        </form>
+    </div>
+</body>
+</html>
